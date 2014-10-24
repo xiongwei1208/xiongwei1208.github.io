@@ -63,6 +63,134 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-分布式版本控制系统-GIT" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/24/分布式版本控制系统-GIT/" class="article-date">
+  <time datetime="2014-10-24T05:09:12.000Z" itemprop="datePublished">Oct 24 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: 分布式版本控制系统—GIT<br>date: 2014-10-24 13:06:57</p>
+<h2 id="tags:分布式版本控制系统—GIT">tags:分布式版本控制系统—GIT</h2>
+<pre><code>Git（Git <span class="comment">--- The stupid content tracker, 傻瓜内容跟踪器。Linus Torvalds 是这样给我们介绍 Git 的）是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。</span>
+Git 是用于 Linux内核开发的版本控制工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用<span class="keyword">http</span>协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使源代码的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kernel 这样的大项目来说自然很重要。 Git 最为出色的是它的合并跟踪（<span class="built_in">merge</span> tracing）能力。
+实际上内核开发团队决定开始开发和使用 Git 来作为内核开发的版本控制系统的时候，世界开源社群的反对声音不少，最大的理由是 Git 太艰涩难懂，从 Git 的内部工作机制来说，的确是这样。但是随着开发的深入，Git 的正常使用都由一些友好的脚本命令来执行，使 Git 变得非常好用，即使是用来管理我们自己的开发项目，Git 都是一个友好，有力的工具。现在，越来越多的著名项目采用 Git 来管理项目开发.
+作为开源自由原教旨主义项目，Git 没有对版本库的浏览和修改做任何的权限限制。
+本文的工作环境是MAC上的iTerm2（有zsh插件），主要讲解一些简单的git操作，希望对新学者有帮助。
+</code></pre><h2 id="git的基本操作">git的基本操作</h2>
+<pre><code>1. 初始化仓库    
+     -<span class="ruby"> git init    
+</span>
+2. 配置作者信息
+     -<span class="ruby"> git config --global user.email <span class="string">"youremail@corp.com"</span>
+</span>     -<span class="ruby"> git config --global user.name <span class="string">"yourname
+</span></span>
+3. 添加文件到暂存区
+     -<span class="ruby"> git add \&lt;filename\&gt; 
+</span>     -<span class="ruby"> git add * (添加所有文件到暂存区)
+</span>
+4. 移除文件
+     -<span class="ruby"> git rm \&lt;filename\&gt;
+</span>
+5. 重命名一个文件
+     -<span class="ruby"> git mv \&lt;oldfilename\&gt; \&lt;newfilename\&gt;
+</span>
+6. 提交暂存区
+
+    `git commit只会提交暂存区（staged）里面的文件`
+
+     -<span class="ruby"> git commit -m <span class="string">"message"</span>    
+</span>
+7. 查看工作目录的状态
+     -<span class="ruby"> git status
+</span>
+8. 查看提交历史记录
+     -<span class="ruby"> git log
+</span>
+9. 查看文件改变
+     -<span class="ruby"> git diff</span>
+</code></pre><h2 id="撤销操作">撤销操作</h2>
+<pre><code>1. 撤销加入暂存区的操作
+     -<span class="ruby"> git reset <span class="constant">HEAD</span> \&lt;file\&gt;
+</span>
+2. 撤销修改的操作
+     -<span class="ruby"> git checkout -- \&lt;file\&gt;
+</span>
+3. 将本地的修改放进回收站
+     -<span class="ruby"> git stash
+</span>
+4. 从回收站中恢复本地的修改
+     -<span class="ruby"> git stash apply</span>
+</code></pre><h2 id="Tag操作">Tag操作</h2>
+<pre><code><span class="number">1</span>. 查看<span class="keyword">tag</span>
+     - git <span class="keyword">tag</span>
+
+<span class="number">2</span>. 创建<span class="keyword">tag</span>
+     - git <span class="keyword">tag</span> -<span class="keyword">a</span> v1.<span class="number">0</span> -<span class="keyword">m</span> <span class="string">"my version 1.0"</span>
+
+<span class="number">3</span>. 显示<span class="keyword">tag</span>信息
+     - git show v1.<span class="number">0</span>
+
+<span class="number">4</span>. 对之前的提交打<span class="keyword">tag</span>
+     - git <span class="keyword">tag</span> -<span class="keyword">a</span> v0.<span class="number">1</span> -<span class="keyword">m</span> <span class="string">"version 0.1"</span>
+</code></pre><h2 id="分支操作">分支操作</h2>
+<pre><code>1. 查看分支
+     - git branch
+
+2. 创建分支
+     - git branch <span class="command">\&lt;</span>branchname<span class="command">\&gt;</span>
+
+3. 删除分支
+     - git branch -d <span class="command">\&lt;</span>branchname<span class="command">\&gt;</span>
+
+4. 切换分支
+     - git checkout <span class="command">\&lt;</span>branchname<span class="command">\&gt;</span>
+
+5. 合并分支
+     - git merge <span class="command">\&lt;</span>branchname<span class="command">\&gt;</span>
+
+6. rebase操作
+     - git rebase <span class="command">\&lt;</span>basebranch<span class="command">\&gt;</span> <span class="command">\&lt;</span>newbranch<span class="command">\&gt;</span>
+</code></pre><h2 id="远端仓库操作">远端仓库操作</h2>
+<pre><code>1. 克隆一个远端仓库
+     -<span class="ruby"> git clone *<span class="constant">URL</span>*
+</span>
+2. 添加远端仓库
+     -<span class="ruby"> git remote add \&lt;name\&gt; \&lt;<span class="constant">URL</span>\&gt;
+</span>
+3. 更新远端仓库的分支和数据
+     -<span class="ruby"> git fetch \&lt;name\&gt; 
+</span>
+4. 获取并合并远端仓库的分支到当前分支
+     -<span class="ruby"> git pull \&lt;reponame\&gt; \&lt;branchname\&gt;
+</span>     -<span class="ruby"> <span class="symbol">eg:</span> `git pull origin master`
+</span>
+5. 上传本地分支和数据到远端仓库
+     -<span class="ruby"> git push \&lt;reponame\&gt; \&lt;branchname\&gt;
+</span>     -<span class="ruby"> <span class="symbol">eg:</span> `git push origin master`
+</span>
+6. 跟踪远端仓库上的分支
+     -<span class="ruby"> git checkout --track origin/testbranch
+</span>     -<span class="ruby"> git checkout -b test origin/testbranch</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/24/分布式版本控制系统-GIT/" data-id="rxdvjhzspbaypym5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-第一次上传博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/10/04/第一次上传博客/" class="article-date">
@@ -200,7 +328,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -210,6 +338,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/10/24/分布式版本控制系统-GIT/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2014/10/04/第一次上传博客/">第一次上传博客</a>
